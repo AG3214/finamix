@@ -224,13 +224,10 @@
                             <button type="button" onclick="selectValue(10000, event)" class="value-btn bg-white hover:bg-gray-100 border border-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg transition duration-300">R$ 10.000</button>
                             <button type="button" onclick="selectValue(20000, event)" class="value-btn bg-white hover:bg-gray-100 border border-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg transition duration-300">R$ 20.000</button>
                             <button type="button" onclick="selectValue(30000, event)" class="value-btn bg-white hover:bg-gray-100 border border-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg transition duration-300">R$ 30.000</button>
-                            <button type="button" onclick="selectValue(50000, event)" class="value-btn bg-white hover:bg-gray-100 border border-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg transition duration-300">R$ 50.000</button>
-                            <button type="button" onclick="showCustomValue(event)" class="value-btn bg-white hover:bg-gray-100 border border-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg transition duration-300">Outro valor</button>
+                            <!-- Col-span-2 deixa esse botão alinhado centralizado ocupando as duas colunas -->
+                            <button type="button" onclick="selectValue(50000, event)" class="value-btn bg-white hover:bg-gray-100 border border-gray-300 text-gray-800 font-bold py-4 px-4 rounded-lg transition duration-300 col-span-2">R$ 50.000</button>
                         </div>
-                        <div id="customValueContainer" class="md:ml-10 mb-6 hidden">
-                            <input type="number" id="customValue" max="100000" class="w-full px-4 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Digite o valor desejado">
-                            <p class="text-xs text-gray-500 mt-2">O valor máximo é de R$ 100.000.</p>
-                        </div>
+
                         <input type="hidden" id="valor" name="valor" value="0">
 
                         <div class="md:ml-10 mb-6">
@@ -349,7 +346,6 @@
             $('#nomeCompleto').on('input', validateStep1);
             $('#cpf').on('input', validateStep2);
             $('#telefone').on('input', validateStep3);
-            $('#customValue').on('input', validateStep4);
         });
         
         function nextStep() {
@@ -430,20 +426,6 @@
             return isValid;
         }
         
-        function validateStep4() {
-            const customValue = $('#customValue').val();
-            const isValid = customValue > 0 && customValue <= 100000;
-            $('#btnStep4').prop('disabled', !isValid);
-            
-            if (isValid) {
-                selectedValue = parseFloat(customValue);
-                $('#valor').val(selectedValue);
-                $('#feedback4').removeClass('hidden');
-            } else {
-                $('#feedback4').addClass('hidden');
-            }
-        }
-        
         function selectValue(value, event) {
             selectedValue = value;
             $('#valor').val(selectedValue);
@@ -452,19 +434,6 @@
             
             $('.value-btn').removeClass('bg-primary text-white border-primary').addClass('bg-white text-gray-800 border-gray-300');
             $(event.currentTarget).removeClass('bg-white text-gray-800 border-gray-300').addClass('bg-primary text-white border-primary');
-
-            $('#customValueContainer').addClass('hidden');
-            $('#customValue').val('');
-        }
-        
-        function showCustomValue(event) {
-            $('#customValueContainer').removeClass('hidden').find('input').focus();
-            $('.value-btn').removeClass('bg-primary text-white border-primary').addClass('bg-white text-gray-800 border-gray-300');
-            $(event.currentTarget).addClass('bg-primary text-white border-primary');
-            $('#btnStep4').prop('disabled', true);
-            $('#feedback4').addClass('hidden');
-            selectedValue = 0;
-            $('#valor').val(selectedValue);
         }
 
         let loadingInterval;
