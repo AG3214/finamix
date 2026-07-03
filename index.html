@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     
-    <!-- NOVA Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18294901486"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -19,7 +19,7 @@
       gtag('config', 'AW-18294901486');
     </script>
 
-    <!-- NOVO Snippet de Conversão -->
+    <!-- Event snippet for Enviar formulário de lead conversion page -->
     <script>
     function gtag_report_conversion(url) {
       var callback = function () {
@@ -28,10 +28,7 @@
         }
       };
       gtag('event', 'conversion', {
-          // 👇 SUBSTITUA O TEXTO "SEU_NOVO_ROTULO_AQUI" PELO CÓDIGO DO GOOGLE ADS 👇
-          'send_to': 'AW-18294901486/SEU_NOVO_ROTULO_AQUI',
-          'value': 1.0,
-          'currency': 'BRL',
+          'send_to': 'AW-18294901486/QLv6COGz6MkcEO6V2JNE',
           'event_callback': callback
       });
       return false;
@@ -260,7 +257,6 @@
                         </div>
                     </div>
                     
-                    <!-- Passo 6 com o Evento ONCLICK de Conversão no Botão -->
                     <div id="step6" class="hidden p-8">
                         <div class="text-center py-8">
                             <div class="bg-success-light text-success rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
@@ -278,7 +274,7 @@
                                 <p class="text-gray-600 mt-2">Sua chance de aprovação está em <span class="font-bold">95%</span></p>
                             </div>
                             
-                            <!-- Gatilho do gtag adicionado com onclick -->
+                            <!-- Botão do WhatsApp chamando o disparador de conversão no onclick -->
                             <a id="whatsappBtn" href="#" onclick="return gtag_report_conversion(this.href);" class="inline-block bg-success hover:bg-success-dark text-white font-bold py-4 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 pulse">
                                 <i class="fab fa-whatsapp mr-2"></i> Falar agora com um consultor especialista
                             </a>
@@ -326,7 +322,6 @@
         let currentStep = 0;
         let selectedValue = 0;
 
-        // ✅ COLOQUE A SUA URL DO GOOGLE APPS SCRIPT AQUI
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylk0_lyDKmxtYWjfpmUAbDNwZuVmedoH7txW0RQBvViMFhwtStVwsdz82iA7tEGBhv/exec';
 
         function testaCPF(strCPF) {
@@ -402,7 +397,6 @@
                 } else {
                     $('#cpfError').addClass('hidden');
                     
-                    // Verificar se CPF já existe no servidor
                     try {
                         const response = await fetch(`${SCRIPT_URL}?cpf=${cpfLimpo}`);
                         const data = await response.json();
@@ -417,7 +411,7 @@
                     } catch (error) {
                         console.error('Erro ao verificar CPF:', error);
                         $('#cpfExistsError').addClass('hidden');
-                        isValid = true; // Permite continuar em caso de erro na verificação
+                        isValid = true; 
                     }
                 }
             } else {
@@ -501,7 +495,6 @@
             $(`#step${currentStep}`).removeClass('hidden').addClass('fade-in');
             startLoadingMessages();
 
-            // Coletar dados do formulário
             const formData = {
                 nomeCompleto: $('#nomeCompleto').val(),
                 cpf: $('#cpf').val().replace(/\D/g, ''),
@@ -510,7 +503,6 @@
             };
 
             try {
-                // Enviar dados para o Google Sheets
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
